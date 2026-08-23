@@ -1,16 +1,17 @@
 import os
 import re
 import shutil
+from pathlib import Path
 import pandas as pd
 # --- file dir ---
-RAW_DIR = "/Users/mehranbeyki/portfolio-projects/scrna-immune-checkpoint-response/data/raw/GSE300475/GSE300475_RAW"
-OUT_GEX = "/Users/mehranbeyki/portfolio-projects/scrna-immune-checkpoint-response/data/raw/gex"
-OUT_VDJ = "/Users/mehranbeyki/portfolio-projects/scrna-immune-checkpoint-response/data/raw/vdj"
-os.makedirs(OUT_GEX, exist_ok=True)
-os.makedirs(OUT_VDJ, exist_ok=True)
+PROJ_ROOT = Path(os.environ.get("SCRNA_PROJ_ROOT", Path.cwd()))
+RAW_DIR  = PROJ_ROOT / "data" / "raw" / "GSE300475" / "GSE300475_RAW"
+OUT_GEX  = PROJ_ROOT / "data" / "raw" / "gex"
+OUT_VDJ  = PROJ_ROOT / "data" / "raw" / "vdj"
+MAPPING  = PROJ_ROOT / "data" / "mapping_table.csv"
 # -------------------------------------
 # use mapping_table.csv from 01_data_download_preprocessing notbook
-mapping = pd.read_csv("/Users/mehranbeyki/portfolio-projects/scrna-immune-checkpoint-response/data/mapping_table.csv")
+mapping = pd.read_csv(MAPPING)
 gsm_to_name = dict(zip(mapping["geo_accession"], mapping["title"]))
 
 # --- REGEX ---

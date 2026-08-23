@@ -1,0 +1,13 @@
+qc:
+  min_features: 200
+  max_features: 6000
+  max_counts: 30000
+  max_percent_mt: 15
+integration:
+  method: harmony
+  theta: 2
+  seed: 42
+clustering:
+  resolution: 0.5
+  seed: 42
+exhaustion_markers: [PDCD1, CTLA4, LAG3, HAVCR2, TOX, TIGIT]

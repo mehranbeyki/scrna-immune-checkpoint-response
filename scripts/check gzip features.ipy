@@ -1,9 +1,22 @@
 import gzip
+import os
+from pathlib import Path
+from collections import deque
 
-with gzip.open("/Users/mehranbeyki/portfolio-projects/scrna-immune-checkpoint-response/data/raw/gex/scRNAseq PT1/features.tsv.gz", "rt") as f:
-    lines = f.readlines()
+# --- file dir ---
+PROJ_ROOT = Path(os.environ.get("SCRNA_PROJ_ROOT", Path.cwd()))
+OUT_GEX = PROJ_ROOT / "data" / "raw" / "gex"
 
-print(f" all lines : {len(lines)}\n")
-print("10 lines from the end:")
-for line in lines[-10:]:
-    print(line.strip())
+file_path = OUT_GEX / "scRNAseq PT1" / "features.tsv.gz"
+
+# check if the file exists before attempting to read it
+if file_path.exists():
+    # use gzip to read the last 10 lines of the gzipped file
+    with gzip.open(file_path, "rt") as f:
+        last_10_lines = deque(f, maxlen=10)
+    
+    print("10 lines from the end:")
+    for line in last_10_lines:
+        print(line.strip())
+else:
+    print(f"Error: The file {file_path} does not exist.")
